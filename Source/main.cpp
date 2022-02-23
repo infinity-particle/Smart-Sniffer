@@ -1,14 +1,28 @@
-#include "main_window.h"
+#include "mainwindow.h"
 #include <QApplication>
-#include <QTextStream>
+#include <stdio.h>
 
-#define MainWindowInstance Singleton<MainWindow>::instance()
+#ifdef _WIN32
+#pragma comment(lib,"ws2_32.lib")
+#endif
+
+#include <QMessageBox>
 
 int main(int argc, char *argv[]){
-  QApplication a(argc, argv);
-  MainWindow w;
-  w.setWindowTitle("Smart Sniffer");
-  w.show();
+    QApplication a(argc, argv);
 
-  return a.exec();
+#ifdef _WIN32
+    WSADATA wsa;
+    if(WSAStartup(MAKEWORD(2,2),&wsa) != NO_ERROR){
+        QMessageBox messageBox;
+        messageBox.critical(0,"Error","Failed to initialized WSA!\nCode:" + QString::number(WSAGetLastError()));
+        messageBox.setFixedSize(500,200);
+        return 1;
+    }
+#endif
+
+    MainWindow w;
+    w.show();
+
+    return a.exec();
 }

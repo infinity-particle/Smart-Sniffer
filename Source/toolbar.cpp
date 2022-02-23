@@ -1,42 +1,46 @@
 #include "toolbar.h"
 
-ToolBar::ToolBar(QWidget* parent) : QToolBar(parent){
-  startIcon = new QIcon(":/Icons/play.png");
-  stopIcon = new QIcon(":/Icons/stop.png");
-  settingsIcon = new QIcon(":/Icons/settings.png");
-  filterIcon = new QIcon(":/Icons/filter.png");
+ToolBar::ToolBar(QString name, QWidget* parent) : QToolBar(name,parent){
+    qDebug() << QApplication::applicationDirPath();
+    startIcon = new QIcon(":/Icons/start.png");
+    stopIcon = new QIcon(":/Icons/stop.png");
+    saveIcon = new QIcon(":/Icons/save.png");
 
-  startAction = new QAction(*startIcon,"&Start capture",nullptr);
-  stopAction = new QAction(*stopIcon,"&Stop capture",nullptr);
-  settingsAction = new QAction(*settingsIcon,"&Settings",nullptr);
-  filterAction = new QAction(*filterIcon,"&Filter",nullptr);
+    startAction = new QAction(*startIcon,"Start capture",NULL);
+    stopAction = new QAction(*stopIcon,"Stop capture",NULL);
+    saveAction = new QAction(*saveIcon,"Save",NULL);
 
-  this->setMovable(false);
-
-  this->addAction(startAction);
-  this->addAction(stopAction);
-  this->addSeparator();
-  this->addAction(settingsAction);
-  this->addSeparator();
-  this->addAction(filterAction);
+    this->addAction(startAction);
+    this->addAction(stopAction);
+    this->addSeparator();
+    this->addAction(saveAction);
+    this->setMovable(false);
 }
 
-void ToolBar::start(){
-
+QAction* ToolBar :: getStartAction(){
+    return startAction;
 }
 
-void ToolBar::stop(){
-
+QAction* ToolBar :: getStopAction(){
+    return stopAction;
 }
 
-void ToolBar::settings(){
-
-}
-
-void ToolBar::filter(){
-
+QAction* ToolBar :: getSaveAction(){
+    return saveAction;
 }
 
 ToolBar::~ToolBar(){
+    delete startIcon;
+    delete stopIcon;
+    delete saveIcon;
+    delete startAction;
+    delete stopAction;
+    delete saveAction;
 
+    startIcon = NULL;
+    stopIcon = NULL;
+    saveIcon = NULL;
+    startAction = NULL;
+    stopAction = NULL;
+    saveAction = NULL;
 }

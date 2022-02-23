@@ -4,14 +4,13 @@ PacketModel::PacketModel(QObject* parent) : QAbstractTableModel(parent){
 
 }
 
-/*PacketModel :: PacketModel(QList<TCP_packet> listOfPackets, QObject *parent) : QAbstractTableModel(parent){
+PacketModel :: PacketModel(QList<TCP_packet> listOfPackets, QObject *parent) : QAbstractTableModel(parent){
     this->listOfPackets = listOfPackets;
-}*/
+}
 
 int PacketModel :: rowCount(const QModelIndex &parent) const{
     Q_UNUSED(parent);
-   //return listOfPackets.size();
-  return 0;
+    return listOfPackets.size();
 }
 
 int PacketModel :: columnCount(const QModelIndex &parent) const{
@@ -20,7 +19,7 @@ int PacketModel :: columnCount(const QModelIndex &parent) const{
 }
 
 QVariant PacketModel :: data(const QModelIndex &index, int role) const{
-    /*if(!index.isValid()){
+    if(!index.isValid()){
         return QVariant();
     }
 
@@ -48,7 +47,7 @@ QVariant PacketModel :: data(const QModelIndex &index, int role) const{
     }else{
         return QVariant();
     }
-    return QVariant();*/
+    return QVariant();
 }
 
 QVariant PacketModel :: headerData(int section, Qt::Orientation orientation, int role) const{
@@ -58,19 +57,19 @@ QVariant PacketModel :: headerData(int section, Qt::Orientation orientation, int
     if(orientation == Qt::Horizontal){
         switch(section){
         case 0:{
-            return "№";
+            return "Source port";
         }break;
         case 1:{
-            return "Source IP";
+            return "Destination port";
         }break;
         case 2:{
-            return "Destination IP";
-        }break;
-        case 3:{
             return "Protocol";
         }break;
+        case 3:{
+            return "Packet size(bytes)";
+        }break;
         case 4:{
-            return "Length";
+            return "Checksum";
         }break;
         default:{
             return QVariant();
